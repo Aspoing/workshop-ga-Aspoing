@@ -1,0 +1,17 @@
+name: Tests
+
+# Déclenche le workflow sur les événements push sur les branches dev et main
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Première étape : dire "hello world"
+      - name: Say hello world
+        run: echo "Welcome to the Github Actions workshop !"
