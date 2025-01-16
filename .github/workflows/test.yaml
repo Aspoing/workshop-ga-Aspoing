@@ -1,4 +1,4 @@
-name: Tests
+name: Functional Tests Workflow
 
 on:
   push:
@@ -17,47 +17,24 @@ jobs:
     steps:
       - name: Say hello world
         run: echo "Welcome to the Github Actions workshop !"
-
+  
   unit-test:
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Run unit tests
-        run: |
-          make tests > test-output.txt
+    - name: Set permissions for functional-test.sh
+      run: chmod +x functional-test.sh
 
-      - name: Run coverage
-        run: |
-          make coverage > coverage-output.txt
+    - name: Run functional tests
+      run: ./functional-test.sh
 
-      - name: Upload coverage outputs
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage_outputs
-          path: coverage-output.txt
-
-  functional-test:
-    runs-on: ubuntu-latest
-    container:
-      image: epitechcontent/epitest-docker
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Run functional tests
-        run: |
-          make functional-tests > functional-test.sh
-
-      - name: Upload functional tests outputs
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: function-tests_outputs
-          path: functional-tests-output.txt
+    - name: Upload test outputs as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: function-tests_outputs
+        path: ./functional-test.sh
