@@ -24,8 +24,15 @@ jobs:
 
       - name: Run unit tests
         run: |
-          make tests
+          make tests > test-output.txt
 
       - name: Run coverage
         run: |
-          make coverage
+          make coverage > coverage-output.txt
+
+      - name: Upload coverage outputs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage_outputs
+          path: coverage-output.txt
