@@ -53,7 +53,7 @@ jobs:
 
       - name: Run functional tests
         run: |
-          make functional-tests > functional-tests-output.txt
+          make functional-tests > functional-test.sh
 
       - name: Upload functional tests outputs
         if: always()
